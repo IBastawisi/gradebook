@@ -23,7 +23,7 @@ public class CourseService {
   public Course getCourse(String courseCode) {
     List<Course> courses = courseRepository.getCourses();
     for (Course course : courses) {
-      if (course.getCourseCode().equals(courseCode)) {
+      if (course.getCode().equals(courseCode)) {
         return course;
       }
     }
@@ -33,7 +33,7 @@ public class CourseService {
   public void removeCourse(String courseCode) {
     List<Course> courses = courseRepository.getCourses();
     for (int i = 0; i < courses.size(); i++) {
-      if (courses.get(i).getCourseCode().equals(courseCode)) {
+      if (courses.get(i).getCode().equals(courseCode)) {
         courses.remove(i);
         return;
       }
@@ -43,7 +43,7 @@ public class CourseService {
   public void updateCourse(String courseCode, Course course) {
     List<Course> courses = courseRepository.getCourses();
     for (int i = 0; i < courses.size(); i++) {
-      if (courses.get(i).getCourseCode().equals(courseCode)) {
+      if (courses.get(i).getCode().equals(courseCode)) {
         courses.set(i, course);
         return;
       }

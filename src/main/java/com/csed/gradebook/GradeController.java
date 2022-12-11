@@ -55,7 +55,7 @@ public class GradeController {
   }
 
   // get grades by course code
-  @GetMapping(path = "{code}")
+  @GetMapping(path = "course/{code}")
   public List<Grade> getGradesByCourseCode(
       @PathVariable("code") String code) {
     return gradeService.getGradesByCourseCode(code);

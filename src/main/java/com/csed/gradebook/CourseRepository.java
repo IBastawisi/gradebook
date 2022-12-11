@@ -10,7 +10,14 @@ public class CourseRepository {
   private List<Course> courses;
 
   public CourseRepository() {
-    courses = new ArrayList<Course>();
+    courses = new ArrayList<Course>(){
+      {
+        add(new Course("math 2", "CSE2", "Introduction to calculus", "prof. R.A", "2020", 150));
+        add(new Course("math 3", "CSE3", "Introduction to linear algebra", "prof. S.S", "2021", 150));
+        add(new Course("math 4", "CSE4", "Introduction to complex analysis", "prof. A.A", "2021", 150));
+        add(new Course("math 5", "CSE5", "Introduction to numerical methods", "prof. M.A", "2022", 150));
+      }
+    };
   }
 
   public void addCourse(Course course) {
@@ -31,7 +38,7 @@ public class CourseRepository {
 
   public Course getCourseByCode(String courseCode) {
     for (Course course : courses) {
-      if (course.getCourseCode().equals(courseCode)) {
+      if (course.getCode().equals(courseCode)) {
         return course;
       }
     }
@@ -40,7 +47,7 @@ public class CourseRepository {
 
   public void removeCourseByCode(String courseCode) {
     for (int i = 0; i < courses.size(); i++) {
-      if (courses.get(i).getCourseCode().equals(courseCode)) {
+      if (courses.get(i).getCode().equals(courseCode)) {
         courses.remove(i);
         return;
       }
@@ -49,7 +56,7 @@ public class CourseRepository {
 
   public void updateCourseByCode(String courseCode, Course Course) {
     for (int i = 0; i < courses.size(); i++) {
-      if (courses.get(i).getCourseCode().equals(courseCode)) {
+      if (courses.get(i).getCode().equals(courseCode)) {
         courses.set(i, Course);
         return;
       }

@@ -10,7 +10,13 @@ public class StudentRepository {
   private List<Student> students;
 
   public StudentRepository() {
-    students = new ArrayList<Student>();
+    students = new ArrayList<Student>() {
+      {
+        add(new Student("1", "Ibrahim El-bastawisi", "ibastawisi@outlook.com"));
+        add(new Student("2", "Leanne Graham", "Sincere@april.biz"));
+        add(new Student("3", "Ervin Howell", "Shanna@melissa.tv"));
+      }
+    };
   }
 
   public void addStudent(Student student) {

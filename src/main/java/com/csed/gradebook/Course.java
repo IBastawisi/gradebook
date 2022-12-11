@@ -18,51 +18,51 @@ public class Course {
     this.fullmark = fullmark;
   }
 
-  public String getCourseName() {
+  public String getName() {
     return name;
   }
 
-  public void setCourseName(String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
-  public String getCourseCode() {
+  public String getCode() {
     return code;
   }
 
-  public void setCourseCode(String code) {
+  public void setCode(String code) {
     this.code = code;
   }
 
-  public String getCourseDescription() {
+  public String getDescription() {
     return description;
   }
 
-  public void setCourseDescription(String description) {
+  public void setDescription(String description) {
     this.description = description;
   }
 
-  public String getCourseInstructor() {
+  public String getInstructor() {
     return instructor;
   }
 
-  public void setCourseInstructor(String instructor) {
+  public void setInstructor(String instructor) {
     this.instructor = instructor;
   }
 
-  public String getCourseYear() {
+  public String getYear() {
     return year;
   }
 
-  public void setCourseYear(String Year) {
+  public void setYear(String Year) {
     this.year = Year;
   }
 
-  public int getCourseFullmark() {
+  public int getFullmark() {
     return fullmark;
   }
 
-  public void setCourseFullmark(int fullmark) {
+  public void setFullmark(int fullmark) {
     this.fullmark = fullmark;
   }
 }

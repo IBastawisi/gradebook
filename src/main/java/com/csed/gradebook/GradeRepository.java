@@ -10,7 +10,19 @@ public class GradeRepository {
   private List<Grade> grades;
 
   public GradeRepository() {
-    grades = new ArrayList<Grade>();
+    grades = new ArrayList<Grade>(){
+      {
+        add(new Grade("CSE2", "1", 80));
+        add(new Grade("CSE2", "2", 90));
+        add(new Grade("CSE2", "3", 100));
+        add(new Grade("CSE3", "1", 110));
+        add(new Grade("CSE3", "2", 80));
+        add(new Grade("CSE3", "3", 90));
+        add(new Grade("CSE4", "1", 123));
+        add(new Grade("CSE4", "3", 111));
+        add(new Grade("CSE5", "1", 134));
+      }
+    };
   }
 
   public void addGrade(Grade grade) {
