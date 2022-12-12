@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,34 +31,30 @@ public class GradeController {
     gradeService.addGrade(grade);
   }
 
-  // get grade by course code and student id
-  @GetMapping(path = "{code}/{studentId}")
-  public Grade getGrade(
-      @PathVariable("code") String code,
-      @PathVariable("studentId") String studentId) {
-    return gradeService.getGradeByCourseCodeAndStudentId(code, studentId);
+  @GetMapping(path = "{id}")
+  public Grade getGradeById(
+      @PathVariable("id") String id) {
+    return gradeService.getGradeById(id);
   }
 
-  @PatchMapping(path = "{code}/{studentId}")
-  public void updateGrade(
-      @PathVariable("code") String code,
-      @PathVariable("studentId") String studentId,
+  @PutMapping(path = "{id}")
+  public void updateGradeById(
+      @PathVariable("id") String id,
       @RequestBody Grade grade) {
-    gradeService.updateGradeByCourseCodeAndStudentId(code, studentId, grade);
+    gradeService.updateGradeById(id, grade);
   }
 
-  @DeleteMapping(path = "{code}/{studentId}")
+  @DeleteMapping(path = "{id}")
   public void deleteGrade(
-      @PathVariable("code") String code,
-      @PathVariable("studentId") String studentId) {
-    gradeService.removeGradeByCourseCodeAndStudentId(code, studentId);
+      @PathVariable("id") String id) {
+    gradeService.removeGradeById(id);
   }
 
-  // get grades by course code
-  @GetMapping(path = "course/{code}")
-  public List<Grade> getGradesByCourseCode(
-      @PathVariable("code") String code) {
-    return gradeService.getGradesByCourseCode(code);
+  // get grades by course id
+  @GetMapping(path = "course/{id}")
+  public List<Grade> getGradesByCourseId(
+      @PathVariable("id") String id) {
+    return gradeService.getGradesByCourseId(id);
   }
 
   // get grades by student id
@@ -67,5 +63,5 @@ public class GradeController {
       @PathVariable("studentId") String studentId) {
     return gradeService.getGradesByStudentId(studentId);
   }
-  
+
 }

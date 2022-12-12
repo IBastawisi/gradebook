@@ -24,24 +24,32 @@ public class GradeService {
     return gradeRepository.getGradeCount();
   }
 
+  public Grade getGradeById(String gradeId) {
+    return gradeRepository.getGradeById(gradeId);
+  }
+
+  public void updateGradeById(String gradeId, Grade grade) {
+    gradeRepository.updateGradeById(grade);
+  }
+
+  public void removeGradeById(String gradeId) {
+    gradeRepository.removeGradeById(gradeId);
+  }
+
   public List<Grade> getGradesByStudentId(String studentId) {
     return gradeRepository.getGradesByStudentId(studentId);
   }
 
-  public List<Grade> getGradesByCourseCode(String courseCode) {
-    return gradeRepository.getGradeByCourseCode(courseCode);
+  public List<Grade> getGradesByCourseId(String courseId) {
+    return gradeRepository.getGradeByCourseId(courseId);
   }
 
-  public Grade getGradeByCourseCodeAndStudentId(String courseCode, String studentId) {
-    return gradeRepository.getGradeByCourseCodeAndStudentId(courseCode, studentId);
+  public void removeGradesByStudentId(String studentId) {
+    gradeRepository.removeGradesByStudentId(studentId);
   }
 
-  public void removeGradeByCourseCodeAndStudentId(String courseCode, String studentId) {
-    gradeRepository.removeGradeByCourseCodeAndStudentId(courseCode, studentId);
-  }
-
-  public void updateGradeByCourseCodeAndStudentId(String courseCode, String studentId, Grade grade) {
-    gradeRepository.updateGradeByCourseCodeAndStudentId(courseCode, studentId, grade);
+  public void removeGradesByCourseId(String courseId) {
+    gradeRepository.removeGradesByCourseId(courseId);
   }
 
   public void clear() {

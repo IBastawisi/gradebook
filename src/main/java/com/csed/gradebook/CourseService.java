@@ -20,34 +20,16 @@ public class CourseService {
     return courseRepository.getCourses();
   }
 
-  public Course getCourse(String courseCode) {
-    List<Course> courses = courseRepository.getCourses();
-    for (Course course : courses) {
-      if (course.getCode().equals(courseCode)) {
-        return course;
-      }
-    }
-    return null;
+  public Course getCourse(String courseId) {
+    return courseRepository.getCourseById(courseId);
   }
 
-  public void removeCourse(String courseCode) {
-    List<Course> courses = courseRepository.getCourses();
-    for (int i = 0; i < courses.size(); i++) {
-      if (courses.get(i).getCode().equals(courseCode)) {
-        courses.remove(i);
-        return;
-      }
-    }
+  public void updateCourse(String courseId, Course course) {
+    courseRepository.updateCourseById(courseId, course);
   }
 
-  public void updateCourse(String courseCode, Course course) {
-    List<Course> courses = courseRepository.getCourses();
-    for (int i = 0; i < courses.size(); i++) {
-      if (courses.get(i).getCode().equals(courseCode)) {
-        courses.set(i, course);
-        return;
-      }
-    }
+  public void removeCourse(String courseId) {
+    courseRepository.removeCourseById(courseId);
   }
 
   public void clear() {

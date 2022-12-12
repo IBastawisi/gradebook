@@ -16,7 +16,7 @@ public class GradebookApplication {
 
 		@Override
 		public void addCorsMappings(CorsRegistry registry) {
-			registry.addMapping("/**").allowedOrigins("http://localhost:3000", "https://s3.ibastawisi.ml");
+			registry.addMapping("/**").allowedOrigins("http://localhost:3000", "https://s3.ibastawisi.ml").allowedMethods("GET", "POST", "PUT", "DELETE");
 		}
 	}
 	public static void main(String[] args) {

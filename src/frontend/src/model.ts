@@ -5,6 +5,7 @@ export interface StudentModel {
 }
 
 export interface CourseModel {
+  id: string;
   code: string;
   name: string;
   description: string;
@@ -14,33 +15,8 @@ export interface CourseModel {
 }
 
 export interface GradeModel {
-  studentId: string;
-  courseCode: string;
-  degree: number;
-}
-
-export interface Student {
   id: string;
-  name: string;
-  email: string;
-  courses: CourseModel[];
-
-}
-
-export interface Course {
-  code: string;
-  name: string;
-  description: string;
-  instructor: string;
-  year: string;
-  fullmark: number;
-  students: StudentModel[];
-}
-
-export interface Grade {
   studentId: string;
-  courseCode: string;
+  courseId: string;
   degree: number;
-  student: Student;
-  course: Course;
 }

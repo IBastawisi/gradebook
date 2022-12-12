@@ -10,17 +10,17 @@ public class GradeRepository {
   private List<Grade> grades;
 
   public GradeRepository() {
-    grades = new ArrayList<Grade>(){
+    grades = new ArrayList<Grade>() {
       {
-        add(new Grade("CSE2", "1", 80));
-        add(new Grade("CSE2", "2", 90));
-        add(new Grade("CSE2", "3", 100));
-        add(new Grade("CSE3", "1", 110));
-        add(new Grade("CSE3", "2", 80));
-        add(new Grade("CSE3", "3", 90));
-        add(new Grade("CSE4", "1", 123));
-        add(new Grade("CSE4", "3", 111));
-        add(new Grade("CSE5", "1", 134));
+        add(new Grade("1", "1", "1", 80));
+        add(new Grade("2", "1", "2", 90));
+        add(new Grade("3", "1", "3", 100));
+        add(new Grade("4", "2", "1", 110));
+        add(new Grade("5", "2", "2", 80));
+        add(new Grade("6", "2", "3", 90));
+        add(new Grade("7", "3", "1", 123));
+        add(new Grade("8", "3", "3", 111));
+        add(new Grade("9", "4", "1", 134));
       }
     };
   }
@@ -37,6 +37,31 @@ public class GradeRepository {
     return grades.size();
   }
 
+  public Grade getGradeById(String id) {
+    for (Grade grade : grades) {
+      if (grade.getId().equals(id)) {
+        return grade;
+      }
+    }
+    return null;
+  }
+
+  public void updateGradeById(Grade grade) {
+    for (int i = 0; i < grades.size(); i++) {
+      if (grades.get(i).getId().equals(grade.getId())) {
+        grades.set(i, grade);
+      }
+    }
+  }
+
+  public void removeGradeById(String gradeId) {
+    for (int i = 0; i < grades.size(); i++) {
+      if (grades.get(i).getId().equals(gradeId)) {
+        grades.remove(i);
+      }
+    }
+  }
+
   public List<Grade> getGradesByStudentId(String studentId) {
     ArrayList<Grade> studentGrades = new ArrayList<Grade>();
     for (Grade grade : grades) {
@@ -47,41 +72,22 @@ public class GradeRepository {
     return studentGrades;
   }
 
-  public List<Grade> getGradeByCourseCode(String courseCode) {
+  public List<Grade> getGradeByCourseId(String courseId) {
     ArrayList<Grade> courseGrades = new ArrayList<Grade>();
     for (Grade grade : grades) {
-      if (grade.getCourseCode().equals(courseCode)) {
+      if (grade.getCourseId().equals(courseId)) {
         courseGrades.add(grade);
       }
     }
     return courseGrades;
   }
 
-  public Grade getGradeByCourseCodeAndStudentId(String courseCode, String studentId) {
-    for (Grade grade : grades) {
-      if (grade.getCourseCode().equals(courseCode) && grade.getStudentId().equals(studentId)) {
-        return grade;
-      }
-    }
-    return null;
+  public void removeGradesByStudentId(String studentId) {
+    grades.removeIf(grade -> grade.getStudentId().equals(studentId));
   }
 
-  public void removeGradeByCourseCodeAndStudentId(String courseCode, String studentId) {
-    for (int i = 0; i < grades.size(); i++) {
-      if (grades.get(i).getCourseCode().equals(courseCode) && grades.get(i).getStudentId().equals(studentId)) {
-        grades.remove(i);
-        return;
-      }
-    }
-  }
-
-  public void updateGradeByCourseCodeAndStudentId(String courseCode, String studentId, Grade grade) {
-    for (int i = 0; i < grades.size(); i++) {
-      if (grades.get(i).getCourseCode().equals(courseCode) && grades.get(i).getStudentId().equals(studentId)) {
-        grades.set(i, grade);
-        return;
-      }
-    }
+  public void removeGradesByCourseId(String courseId) {
+    grades.removeIf(grade -> grade.getCourseId().equals(courseId));
   }
 
   public void clear() {

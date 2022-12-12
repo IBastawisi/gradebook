@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class CourseController {
 
   private CourseService courseService;
+  private GradeService gradeService;
 
-  public CourseController(CourseService courseService) {
+  public CourseController(CourseService courseService, GradeService gradeService) {
     this.courseService = courseService;
+    this.gradeService = gradeService;
   }
 
   @GetMapping
@@ -31,22 +33,23 @@ public class CourseController {
     courseService.addCourse(course);
   }
 
-  @GetMapping(path = "{code}")
+  @GetMapping(path = "{id}")
   public Course getCourse(
-      @PathVariable("code") String code) {
-    return courseService.getCourse(code);
+      @PathVariable("id") String id) {
+    return courseService.getCourse(id);
   }
 
-  @PatchMapping(path = "{code}")
+  @PutMapping(path = "{id}")
   public void updateCourse(
-      @PathVariable("code") String code,
+      @PathVariable("id") String id,
       @RequestBody Course course) {
-    courseService.updateCourse(code, course);
+    courseService.updateCourse(id, course);
   }
 
-  @DeleteMapping(path = "{code}")
+  @DeleteMapping(path = "{id}")
   public void deleteCourse(
-      @PathVariable("code") String code) {
-    courseService.removeCourse(code);
+      @PathVariable("id") String id) {
+    courseService.removeCourse(id);
+    gradeService.removeGradesByCourseId(id);
   }
 }

@@ -12,10 +12,10 @@ public class CourseRepository {
   public CourseRepository() {
     courses = new ArrayList<Course>(){
       {
-        add(new Course("math 2", "CSE2", "Introduction to calculus", "prof. R.A", "2020", 150));
-        add(new Course("math 3", "CSE3", "Introduction to linear algebra", "prof. S.S", "2021", 150));
-        add(new Course("math 4", "CSE4", "Introduction to complex analysis", "prof. A.A", "2021", 150));
-        add(new Course("math 5", "CSE5", "Introduction to numerical methods", "prof. M.A", "2022", 150));
+        add(new Course("1", "math 2", "CSE2", "Introduction to calculus", "prof. R.A", "2020", 150));
+        add(new Course("2","math 3", "CSE3", "Introduction to linear algebra", "prof. S.S", "2021", 150));
+        add(new Course("3","math 4", "CSE4", "Introduction to complex analysis", "prof. A.A", "2021", 150));
+        add(new Course("4","math 5", "CSE5", "Introduction to numerical methods", "prof. M.A", "2022", 150));
       }
     };
   }
@@ -36,27 +36,27 @@ public class CourseRepository {
     return courses.size();
   }
 
-  public Course getCourseByCode(String courseCode) {
+  public Course getCourseById(String id) {
     for (Course course : courses) {
-      if (course.getCode().equals(courseCode)) {
+      if (course.getId().equals(id)) {
         return course;
       }
     }
     return null;
   }
 
-  public void removeCourseByCode(String courseCode) {
+  public void removeCourseById(String courseId) {
     for (int i = 0; i < courses.size(); i++) {
-      if (courses.get(i).getCode().equals(courseCode)) {
+      if (courses.get(i).getId().equals(courseId)) {
         courses.remove(i);
         return;
       }
     }
   }
 
-  public void updateCourseByCode(String courseCode, Course Course) {
+  public void updateCourseById(String courseId, Course Course) {
     for (int i = 0; i < courses.size(); i++) {
-      if (courses.get(i).getCode().equals(courseCode)) {
+      if (courses.get(i).getId().equals(courseId)) {
         courses.set(i, Course);
         return;
       }

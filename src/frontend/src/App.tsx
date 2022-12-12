@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 import { courseService, gradeService, studentService } from './service';
 import { CourseModel, GradeModel, StudentModel } from './model';
-import { Typography } from '@mui/material';
+import DataTable from './DataTable';
 
 function App() {
   const [studentModels, setStudentModels] = React.useState<StudentModel[]>([]);
@@ -13,77 +12,91 @@ function App() {
 
 
   useEffect(() => {
-    studentService.getStudents().then((students) => {
+    studentService.getAll().then((students) => {
       setStudentModels(students);
     });
-    courseService.getCourses().then((courses) => {
+    courseService.getAll().then((courses) => {
       setCourseModels(courses);
     });
-    gradeService.getGrades().then((grades) => {
+    gradeService.getAll().then((grades) => {
       setGradeModels(grades);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (gradeModels.length === 0) return;
+    setGradeModels(gradeModels.filter((grade) => {
+      const student = studentModels.find((student) => student.id === grade.studentId);
+      const course = courseModels.find((course) => course.id === grade.courseId);
+      return student && course;
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [studentModels, courseModels]);
 
   const studentCols: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Full Name', width: 280 },
-    { field: 'email', headerName: 'Email Address', width: 280 },
+    { field: 'name', headerName: 'Full Name', width: 280, editable: true },
+    { field: 'email', headerName: 'Email Address', width: 280, editable: true },
   ];
 
   const courseCols: GridColDef[] = [
-    { field: 'code', headerName: 'Course Code', width: 70 },
-    { field: 'name', headerName: 'Course Name', width: 120 },
-    { field: 'description', headerName: 'Description', width: 280 },
-    { field: 'instructor', headerName: 'Instructor', width: 130 },
-    { field: 'year', headerName: 'Year', width: 130 },
-    { field: 'fullmark', headerName: 'Fullmark', width: 130 },
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'code', headerName: 'Code', width: 70, editable: true },
+    { field: 'name', headerName: 'Name', width: 130, editable: true },
+    { field: 'description', headerName: 'Description', width: 280, editable: true },
+    { field: 'instructor', headerName: 'Instructor', width: 130, editable: true },
+    { field: 'year', headerName: 'Year', width: 70, editable: true },
+    { field: 'fullmark', headerName: 'Fullmark', width: 70, editable: true },
   ];
 
   const gradeCols: GridColDef[] = [
-    { field: 'studentId', headerName: 'Student', width: 280 },
-    { field: 'courseCode', headerName: 'Course', width: 280 },
-    { field: 'degree', headerName: 'Degree', width: 280 },
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'studentId', headerName: 'Student ID', width: 70, editable: true },
+    { field: 'courseId', headerName: 'Course Id', width: 70, editable: true },
+    { field: 'degree', headerName: 'Degree', width: 70, editable: true },
+    { field: 'name', headerName: 'Student Name', width: 280 },
+    { field: 'course', headerName: 'Course Name', width: 70 },
+    { field: 'fullmark', headerName: 'Fullmark', width: 70 },
+    { field: 'grade', headerName: 'Grade', width: 70 },
   ];
+
+  const calculateGrade = (degree: number, fullmark: number | undefined) => {
+    if (fullmark) {
+      const percentage = (degree / fullmark) * 100;
+      if (percentage >= 90) {
+        return 'A';
+      } else if (percentage >= 80) {
+        return 'B';
+      } else if (percentage >= 70) {
+        return 'C';
+      } else if (percentage >= 60) {
+        return 'D';
+      } else {
+        return 'F';
+      }
+    }
+    return 'N/A';
+  };
+
+  const getGrades = () => gradeModels.map((grade) => {
+    const student = studentModels.find((student) => student.id === grade.studentId);
+    const course = courseModels.find((course) => course.id === grade.courseId);
+    return {
+      ...grade,
+      name: student?.name,
+      course: course?.name,
+      degree: grade.degree,
+      fullmark: course?.fullmark,
+      grade: calculateGrade(grade.degree, course?.fullmark),
+    };
+  });
 
   return (
     <div className="App">
-      <Typography variant="overline" component="div" gutterBottom>
-        Student List
-      </Typography>
-      <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={studentModels}
-          columns={studentCols}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-        />
-      </div>
-      <Typography variant="overline" component="div" gutterBottom>
-        Course List
-      </Typography>
-      <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={courseModels}
-          columns={courseCols}
-          getRowId={(row) => row.code}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-        />
-      </div>
-      <Typography variant="overline" component="div" gutterBottom>
-        Grade List
-      </Typography>
-      <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={gradeModels}
-          columns={gradeCols}
-          getRowId={(row) => `${row.courseCode}-${row.studentId}}`}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-        />
-      </div>
-
-
+      <DataTable title="Student List" rows={studentModels} setRows={setStudentModels} dataColumns={studentCols} service={studentService} />
+      <DataTable title="Course List" rows={courseModels} setRows={setCourseModels} dataColumns={courseCols} service={courseService} />
+      <DataTable title="Grade List" rows={getGrades()} setRows={setGradeModels} dataColumns={gradeCols} service={gradeService} />
     </div>
   );
 }

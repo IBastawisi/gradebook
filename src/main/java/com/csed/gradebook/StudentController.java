@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentController {
 
   private StudentService studentService;
+  private GradeService gradeService;
 
-  public StudentController(StudentService studentService) {
+  public StudentController(StudentService studentService, GradeService gradeService) {
     this.studentService = studentService;
+    this.gradeService = gradeService;
   }
 
   @GetMapping
@@ -31,22 +33,23 @@ public class StudentController {
     studentService.addStudent(student);
   }
 
-  @GetMapping(path = "{studentId}")
+  @GetMapping(path = "{id}")
   public Student getStudentById(
-      @PathVariable("studentId") String studentId) {
-    return studentService.getStudentById(studentId);
+      @PathVariable("id") String id) {
+    return studentService.getStudentById(id);
   }
 
-  @PatchMapping(path = "{studentId}")
+  @PutMapping(path = "{id}")
   public void updateStudentById(
-      @PathVariable("studentId") String studentId,
+      @PathVariable("id") String id,
       @RequestBody Student student) {
-    studentService.updateStudentById(studentId, student);
+    studentService.updateStudentById(id, student);
   }
 
-  @DeleteMapping(path = "{studentId}")
+  @DeleteMapping(path = "{id}")
   public void deleteStudent(
-      @PathVariable("studentId") String studentId) {
-    studentService.removeStudentById(studentId);
+      @PathVariable("id") String id) {
+    studentService.removeStudentById(id);
+    gradeService.removeGradesByStudentId(id);
   }
 }
