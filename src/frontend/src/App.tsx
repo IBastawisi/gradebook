@@ -5,6 +5,12 @@ import { courseService, gradeService, studentService } from './service';
 import { CourseModel, GradeModel, StudentModel } from './model';
 import DataTable from './DataTable';
 import IDSelect from './AutoComplete';
+import ReactApexChart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
+import AppBar from '@mui/material/AppBar';
+import Typography from '@mui/material/Typography';
+import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box';
 
 function App() {
   const [studentModels, setStudentModels] = React.useState<StudentModel[]>([]);
@@ -99,11 +105,80 @@ function App() {
     };
   });
 
+  const getStudentsCourseGradesChartOptions = () => {
+
+    const options: ApexOptions = {
+      chart: {
+        type: 'bar',
+        height: 350,
+        stacked: true,
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+          dataLabels: {
+            total: {
+              enabled: true,
+              offsetX: 0,
+              style: {
+                fontSize: '13px',
+                fontWeight: 900
+              }
+            }
+          }
+        },
+      },
+      stroke: {
+        width: 1,
+        colors: ['#fff']
+      },
+      xaxis: {
+        categories: studentModels.map((student) => student.name),
+      },
+      yaxis: {
+        title: {
+          text: undefined
+        },
+      },
+      fill: {
+        opacity: 1
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'left',
+        offsetX: 40
+      }
+    }
+    return options;
+  }
+
+  const getStudentsCourseGradesSeries = () => {
+    const series: ApexAxisChartSeries = [...courseModels].sort((a, b) => +a.id - +b.id)
+      .map((course) => {
+        const Grades = [...studentModels].sort((a, b) => +a.id - +b.id).map((student) => {
+          const grade = gradeModels.find((grade) => grade.studentId === student.id && grade.courseId === course.id);
+          return grade ? grade.degree : 0;
+        });
+
+        return {
+          name: course.name,
+          data: Grades
+        };
+      });
+
+    return series;
+  }
+
   return (
     <div className="App">
-      <DataTable title="Student List" rows={studentModels} setRows={setStudentModels} dataColumns={studentCols} service={studentService} />
-      <DataTable title="Course List" rows={courseModels} setRows={setCourseModels} dataColumns={courseCols} service={courseService} />
-      <DataTable title="Grade List" rows={getGrades()} setRows={setGradeModels} dataColumns={gradeCols} service={gradeService} />
+      <AppBar position="fixed"><Toolbar><Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>Gradebook</Typography></Toolbar></AppBar>
+      <Box component="main" sx={{ display: "flex", flexDirection: "column", p: 2, gap: 2 }}>
+        <Toolbar />
+        <DataTable title="Student List" rows={studentModels} setRows={setStudentModels} dataColumns={studentCols} service={studentService} />
+        <DataTable title="Course List" rows={courseModels} setRows={setCourseModels} dataColumns={courseCols} service={courseService} />
+        <DataTable title="Grade List" rows={getGrades()} setRows={setGradeModels} dataColumns={gradeCols} service={gradeService} />
+        <ReactApexChart options={getStudentsCourseGradesChartOptions()} series={getStudentsCourseGradesSeries()} type="bar" height={350} />
+      </Box>
     </div>
   );
 }
