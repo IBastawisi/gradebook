@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef, GridRenderEditCellParams } from '@mui/x-data-grid';
 import { courseService, gradeService, studentService } from './service';
 import { CourseModel, GradeModel, StudentModel } from './model';
 import DataTable from './DataTable';
+import IDSelect from './AutoComplete';
 
 function App() {
   const [studentModels, setStudentModels] = React.useState<StudentModel[]>([]);
@@ -52,8 +53,14 @@ function App() {
 
   const gradeCols: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'studentId', headerName: 'Student ID', width: 70, editable: true },
-    { field: 'courseId', headerName: 'Course Id', width: 70, editable: true },
+    {
+      field: 'studentId', headerName: 'Student ID', width: 200, editable: true,
+      renderEditCell: (params: GridRenderEditCellParams) => <IDSelect options={studentModels} {...params} />
+    },
+    {
+      field: 'courseId', headerName: 'Course Id', width: 130, editable: true,
+      renderEditCell: (params: GridRenderEditCellParams) => <IDSelect options={courseModels} {...params} />
+    },
     { field: 'degree', headerName: 'Degree', width: 70, editable: true },
     { field: 'name', headerName: 'Student Name', width: 280 },
     { field: 'course', headerName: 'Course Name', width: 70 },
