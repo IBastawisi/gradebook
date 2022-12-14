@@ -53,8 +53,7 @@ function App() {
     { field: 'name', headerName: 'Name', width: 130, editable: true },
     { field: 'description', headerName: 'Description', width: 280, editable: true },
     { field: 'instructor', headerName: 'Instructor', width: 130, editable: true },
-    { field: 'year', headerName: 'Year', width: 70, editable: true },
-    { field: 'fullmark', headerName: 'Fullmark', width: 70, editable: true },
+    { field: 'fullmark', headerName: 'Fullmark', width: 100, type: "number", editable: true },
   ];
 
   const gradeCols: GridColDef[] = [
@@ -64,12 +63,12 @@ function App() {
       renderEditCell: (params: GridRenderEditCellParams) => <IDSelect options={studentModels} {...params} />
     },
     {
-      field: 'courseId', headerName: 'Course Id', width: 130, editable: true,
+      field: 'courseId', headerName: 'Course ID', width: 130, editable: true,
       renderEditCell: (params: GridRenderEditCellParams) => <IDSelect options={courseModels} {...params} />
     },
-    { field: 'degree', headerName: 'Degree', width: 70, editable: true },
-    { field: 'name', headerName: 'Student Name', width: 280 },
-    { field: 'course', headerName: 'Course Name', width: 70 },
+    { field: 'degree', headerName: 'Degree', width: 100, type: "number", editable: true },
+    { field: 'name', headerName: 'Student', width: 280 },
+    { field: 'course', headerName: 'Course', width: 70 },
     { field: 'fullmark', headerName: 'Fullmark', width: 70 },
     { field: 'grade', headerName: 'Grade', width: 70 },
   ];
@@ -77,13 +76,13 @@ function App() {
   const calculateGrade = (degree: number, fullmark: number | undefined) => {
     if (fullmark) {
       const percentage = (degree / fullmark) * 100;
-      if (percentage >= 90) {
+      if (percentage >= 85) {
         return 'A';
-      } else if (percentage >= 80) {
+      } else if (percentage >= 75) {
         return 'B';
-      } else if (percentage >= 70) {
+      } else if (percentage >= 65) {
         return 'C';
-      } else if (percentage >= 60) {
+      } else if (percentage >= 50) {
         return 'D';
       } else {
         return 'F';

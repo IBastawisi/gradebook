@@ -6,20 +6,18 @@ public class Course {
   private String code;
   private String description;
   private String instructor;
-  private String year;
   private int fullmark;
 
   public Course() {
   }
 
   public Course(String id, String name, String code, String description, String instructor,
-      String Year, int fullmark) {
+      int fullmark) {
     this.id = id;
     this.name = name;
     this.code = code;
     this.description = description;
     this.instructor = instructor;
-    this.year = Year;
     this.fullmark = fullmark;
   }
 
@@ -61,14 +59,6 @@ public class Course {
 
   public void setInstructor(String instructor) {
     this.instructor = instructor;
-  }
-
-  public String getYear() {
-    return year;
-  }
-
-  public void setYear(String Year) {
-    this.year = Year;
   }
 
   public int getFullmark() {

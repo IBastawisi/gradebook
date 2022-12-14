@@ -12,15 +12,16 @@ public class GradeRepository {
   public GradeRepository() {
     grades = new ArrayList<Grade>() {
       {
-        add(new Grade("1", "1", "1", 80));
+        add(new Grade("1", "1", "1", 121));
         add(new Grade("2", "1", "2", 90));
         add(new Grade("3", "1", "3", 100));
-        add(new Grade("4", "2", "1", 110));
+        add(new Grade("4", "2", "1", 83));
         add(new Grade("5", "2", "2", 80));
         add(new Grade("6", "2", "3", 90));
-        add(new Grade("7", "3", "1", 123));
-        add(new Grade("8", "3", "3", 111));
-        add(new Grade("9", "4", "1", 134));
+        add(new Grade("7", "3", "1", 111));
+        add(new Grade("8", "3", "3", 110));
+        add(new Grade("9", "4", "1", 126));
+        add(new Grade("10", "5", "3", 120));
       }
     };
   }

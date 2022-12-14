@@ -10,12 +10,14 @@ public class CourseRepository {
   private List<Course> courses;
 
   public CourseRepository() {
-    courses = new ArrayList<Course>(){
+    courses = new ArrayList<Course>() {
       {
-        add(new Course("1", "math 2", "CSE2", "Introduction to calculus", "prof. R.A", "2020", 150));
-        add(new Course("2","math 3", "CSE3", "Introduction to linear algebra", "prof. S.S", "2021", 150));
-        add(new Course("3","math 4", "CSE4", "Introduction to complex analysis", "prof. A.A", "2021", 150));
-        add(new Course("4","math 5", "CSE5", "Introduction to numerical methods", "prof. M.A", "2022", 150));
+        add(new Course("1", "math 1", "CSE1", "Differential Calculus & Linear Algebra", "R.A", 150));
+        add(new Course("2", "math 2", "CSE2", "Integral Calculus & Analytical Geometry", "R.A", 150));
+        add(new Course("3", "math 3", "CSE3", "Ordinary Differential Equations & Multivariable Functions", "G.B",
+            150));
+        add(new Course("4", "math 4", "CSE4", "Partial Differential Equations & Complex Analysis", "M.A", 150));
+        add(new Course("5", "math 5", "CSE5", "Numerical Methods & Statistics", "M.A", 150));
       }
     };
   }

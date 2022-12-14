@@ -1,7 +1,7 @@
 import { CourseModel, GradeModel, StudentModel } from "./model";
 
-const baseUrl = "http://localhost:5000";
-// const baseUrl = "https://s5.ibastawisi.ml";
+// const baseUrl = "http://localhost:5000";
+const baseUrl = "https://s5.ibastawisi.ml";
 
 const getStudents = async () => {
   const response = await fetch(`${baseUrl}/api/students`);

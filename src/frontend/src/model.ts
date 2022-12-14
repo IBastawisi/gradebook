@@ -10,7 +10,6 @@ export interface CourseModel {
   name: string;
   description: string;
   instructor: string;
-  year: string;
   fullmark: number;
 }
 
